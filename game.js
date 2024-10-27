@@ -30,19 +30,29 @@ function startGame() {
 	game.textAlign = "left"; // Alineación horizontal
 	game.textBaseline = "top"; // Alineación Vertical
 
-	for (let i = 0; i < 10; i++) {
-		for (let j = 0; j < 10; j++) {
-			// let xx = elementsSize * i;
-			// let yy = elementsSize * j;
-			let xx = elementsSize * i + paddingCanvas / 2;
-			let yy = elementsSize * j + paddingCanvas;
+	// array.forEach(fc) // no devuelve un array
+	// array.map(fc) // devuelve un array
 
-			game.fillText(emojis["X"], xx, yy);
-			console.log({ xx, yy, elementsSize });
+	// array.split('') // corta el array según el carácter que se le dé, sí no tiene se le corta por cada carácter
+	// array.trim() // elimina los espacios al inicio o final de un array
+
+	const map = maps[0] // Seleccionamos el mapa o nivel 
+	const mapRows = map.trim().split("\n");
+	const mapRowsLimpios = mapRows.map((row) => row.trim());
+	const mapColums = mapRowsLimpios.map(row => row.split(''))
+
+	for (let row = 0; row < 10; row++) {
+		for (let colums = 0; colums < 10; colums++) {
+			// let xx = elementsSize * colums;
+			// let yy = elementsSize * row;
+			let xx = elementsSize * colums + paddingCanvas / 2;
+			let yy = elementsSize * row + paddingCanvas;
+			
+			game.fillText(emojis[mapColums[row][colums]], xx, yy);
 		}
 
 		//Cuadricula
-		/* 
+		/*
 		for (let i = 0; i <= 10; i++) {
 			let xx = elementsSize * i;
 			fillLine(xx, 0, xx, canvasSize);
