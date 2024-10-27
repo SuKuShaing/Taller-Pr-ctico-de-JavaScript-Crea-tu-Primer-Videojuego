@@ -38,31 +38,41 @@ function startGame() {
 
 	const map = maps[0] // Seleccionamos el mapa o nivel 
 	const mapRows = map.trim().split("\n");
-	const mapRowsLimpios = mapRows.map((row) => row.trim());
+	const mapRowsLimpios = mapRows.map(row => row.trim());
 	const mapColums = mapRowsLimpios.map(row => row.split(''))
 
+	mapColums.forEach((row, rowI) => { // el segundo elemento rowI es el indice
+		row.forEach((col, colI) => { // el segundo elemento colI es el indice
+			const emoji = emojis[col]
+			const xx = elementsSize * colI + paddingCanvas / 2;
+			const yy = elementsSize * rowI + paddingCanvas;
+			game.fillText(emoji, xx, yy);
+			console.log({row, col, rowI, colI})
+		})
+	});
+
+	/*
 	for (let row = 0; row < 10; row++) {
 		for (let colums = 0; colums < 10; colums++) {
-			// let xx = elementsSize * colums;
-			// let yy = elementsSize * row;
 			let xx = elementsSize * colums + paddingCanvas / 2;
 			let yy = elementsSize * row + paddingCanvas;
 			
 			game.fillText(emojis[mapColums[row][colums]], xx, yy);
 		}
-
-		//Cuadricula
-		/*
-		for (let i = 0; i <= 10; i++) {
-			let xx = elementsSize * i;
-			fillLine(xx, 0, xx, canvasSize);
-		}
-		for (let i = 0; i <= 10; i++) {
-			let yy = elementsSize * i;
-			fillLine(0, yy, canvasSize, yy);
-		}
-		*/
 	}
+	*/
+
+	//Cuadricula
+	/*
+	for (let i = 0; i <= 10; i++) {
+		let xx = elementsSize * i;
+		fillLine(xx, 0, xx, canvasSize);
+	}
+	for (let i = 0; i <= 10; i++) {
+		let yy = elementsSize * i;
+		fillLine(0, yy, canvasSize, yy);
+	}
+	*/
 
 	// game.fillRect(0, 100, 100, 100); // (donde parte en X, donde parte en y, hasta dónde en X 100 px [ancho], hasta dónde en y 100 px [largo])
 	// game.clearRect(0, 0, 50, 50); // borra lo que haya en esas coordenadas y funciona igual que el fillRect
