@@ -15,7 +15,6 @@ let paddingCanvas;
 const playerPosition = {
 	x: undefined,
 	y: undefined,
-	inicial: true
 };
 
 // Establece el tamaño del mapa y lo hace responsive
@@ -64,7 +63,7 @@ function startGame() {
 			const yy = elementsSize * rowI + paddingCanvas;
 
 			// Buscando al jugador
-			if (col == "O" && playerPosition.inicial == true) {
+			if (col == "O" && playerPosition.x == undefined) {
 				playerPosition.x = xx;
 				playerPosition.y = yy;
 				console.log({ playerPosition });
@@ -129,28 +128,24 @@ function moveByKeys(event) {
 function moveUp() {
 	console.log("Me quiero mover hacia arriba");
 	playerPosition.y -= (elementsSize);
-	playerPosition.inicial = false
 	startGame();
 	movePlayer();
 }
 function moveLeft() {
 	console.log("Me quiero mover hacia la izquierda");
 	playerPosition.x -= (elementsSize);
-	playerPosition.inicial = false
 	startGame();
 	movePlayer();
 }
 function moveRight() {
 	console.log("Me quiero mover hacia la derecha");
 	playerPosition.x += (elementsSize);
-	playerPosition.inicial = false
 	startGame();
 	movePlayer();
 }
 function moveDown() {
 	console.log("Me quiero mover hacia abajo");
 	playerPosition.y += (elementsSize);
-	playerPosition.inicial = false
 	startGame();
 	movePlayer();
 }
