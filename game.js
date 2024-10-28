@@ -1,5 +1,9 @@
 const canvas = document.querySelector("#game");
 const game = canvas.getContext("2d");
+const btnUp = document.querySelector("#up");
+const btnLeft = document.querySelector("#left");
+const btnRight = document.querySelector("#right");
+const btnDown = document.querySelector("#down");
 
 window.addEventListener("load", setCanvasSize);
 window.addEventListener("resize", setCanvasSize);
@@ -8,6 +12,7 @@ let canvasSize;
 let elementsSize;
 let paddingCanvas;
 
+// Establece el tamaño del mapa y lo hace responsive
 function setCanvasSize() {
 	if (window.innerHeight > window.innerWidth) {
 		canvasSize = window.innerWidth * 0.75;
@@ -23,6 +28,7 @@ function setCanvasSize() {
 	startGame();
 }
 
+// Carga los elementos del mapa
 function startGame() {
 	console.log({ canvasSize, elementsSize, paddingCanvas });
 
@@ -36,19 +42,21 @@ function startGame() {
 	// array.split('') // corta el array según el carácter que se le dé, sí no tiene se le corta por cada carácter
 	// array.trim() // elimina los espacios al inicio o final de un array
 
-	const map = maps[0] // Seleccionamos el mapa o nivel 
+	const map = maps[0]; // Seleccionamos el mapa o nivel
 	const mapRows = map.trim().split("\n");
-	const mapRowsLimpios = mapRows.map(row => row.trim());
-	const mapColums = mapRowsLimpios.map(row => row.split(''))
+	const mapRowsLimpios = mapRows.map((row) => row.trim());
+	const mapColums = mapRowsLimpios.map((row) => row.split(""));
 
-	mapColums.forEach((row, rowI) => { // el segundo elemento rowI es el indice
-		row.forEach((col, colI) => { // el segundo elemento colI es el indice
-			const emoji = emojis[col]
+	mapColums.forEach((row, rowI) => {
+		// el segundo elemento rowI es el indice
+		row.forEach((col, colI) => {
+			// el segundo elemento colI es el indice
+			const emoji = emojis[col];
 			const xx = elementsSize * colI + paddingCanvas / 2;
 			const yy = elementsSize * rowI + paddingCanvas;
 			game.fillText(emoji, xx, yy);
-			console.log({row, col, rowI, colI})
-		})
+			// console.log({ row, col, rowI, colI });
+		});
 	});
 
 	/*
@@ -83,9 +91,35 @@ function startGame() {
 	// game.fillText("Seba", 50, 50); // El texto a colocar y la posición de inicio
 }
 
+// Para crear una linea
 function fillLine(x1, y1, x2, y2) {
 	game.beginPath(); // Inicia un nuevo camino
 	game.moveTo(x1, y1); // Mueve el punto de inicio a (x1, y1) sin rayar nada
 	game.lineTo(x2, y2); // Dibuja una línea hasta (x2, y2)
 	game.stroke(); // Dibuja el contorno del camino
+}
+
+window.addEventListener("keydown", moveByKeys);
+btnUp.addEventListener("click", moveUp);
+btnLeft.addEventListener("click", moveLeft);
+btnRight.addEventListener("click", moveRight);
+btnDown.addEventListener("click", moveDown);
+
+function moveByKeys(event) {
+	if (event.key == "ArrowUp") moveUp();
+	else if (event.key == "ArrowDown") moveDown();
+	else if (event.key == "ArrowRight") moveRight();
+	else if (event.key == "ArrowLeft") moveLeft();
+}
+function moveUp() {
+	console.log("Me quiero mover hacia arriba");
+}
+function moveLeft() {
+	console.log("Me quiero mover hacia la izquierda");
+}
+function moveRight() {
+	console.log("Me quiero mover hacia la derecha");
+}
+function moveDown() {
+	console.log("Me quiero mover hacia abajo");
 }
