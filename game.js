@@ -12,6 +12,12 @@ let canvasSize;
 let elementsSize;
 let paddingCanvas;
 
+const playerPosition = {
+	x: undefined,
+	y: undefined,
+	inicial: true
+};
+
 // Establece el tamaño del mapa y lo hace responsive
 function setCanvasSize() {
 	if (window.innerHeight > window.innerWidth) {
@@ -30,6 +36,7 @@ function setCanvasSize() {
 
 // Carga los elementos del mapa
 function startGame() {
+	game.clearRect(0, 0, canvas.width, canvas.height); // limpia el canvas
 	console.log({ canvasSize, elementsSize, paddingCanvas });
 
 	game.font = elementsSize + "px Verdana";
@@ -52,12 +59,23 @@ function startGame() {
 		row.forEach((col, colI) => {
 			// el segundo elemento colI es el indice
 			const emoji = emojis[col];
+
 			const xx = elementsSize * colI + paddingCanvas / 2;
 			const yy = elementsSize * rowI + paddingCanvas;
-			game.fillText(emoji, xx, yy);
+
+			// Buscando al jugador
+			if (col == "O" && playerPosition.inicial == true) {
+				playerPosition.x = xx;
+				playerPosition.y = yy;
+				console.log({ playerPosition });
+			}
+
+			game.fillText(emoji, xx, yy); // renderiza lo emogis
 			// console.log({ row, col, rowI, colI });
 		});
 	});
+
+	movePlayer();
 
 	/*
 	for (let row = 0; row < 10; row++) {
@@ -91,14 +109,11 @@ function startGame() {
 	// game.fillText("Seba", 50, 50); // El texto a colocar y la posición de inicio
 }
 
-// Para crear una linea
-function fillLine(x1, y1, x2, y2) {
-	game.beginPath(); // Inicia un nuevo camino
-	game.moveTo(x1, y1); // Mueve el punto de inicio a (x1, y1) sin rayar nada
-	game.lineTo(x2, y2); // Dibuja una línea hasta (x2, y2)
-	game.stroke(); // Dibuja el contorno del camino
+function movePlayer() {
+	game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y);
 }
 
+// Escuchar que tecla o botón presionó el jugador
 window.addEventListener("keydown", moveByKeys);
 btnUp.addEventListener("click", moveUp);
 btnLeft.addEventListener("click", moveLeft);
@@ -113,13 +128,37 @@ function moveByKeys(event) {
 }
 function moveUp() {
 	console.log("Me quiero mover hacia arriba");
+	playerPosition.y -= (elementsSize);
+	playerPosition.inicial = false
+	startGame();
+	movePlayer();
 }
 function moveLeft() {
 	console.log("Me quiero mover hacia la izquierda");
+	playerPosition.x -= (elementsSize);
+	playerPosition.inicial = false
+	startGame();
+	movePlayer();
 }
 function moveRight() {
 	console.log("Me quiero mover hacia la derecha");
+	playerPosition.x += (elementsSize);
+	playerPosition.inicial = false
+	startGame();
+	movePlayer();
 }
 function moveDown() {
 	console.log("Me quiero mover hacia abajo");
+	playerPosition.y += (elementsSize);
+	playerPosition.inicial = false
+	startGame();
+	movePlayer();
+}
+
+// Para crear una linea
+function fillLine(x1, y1, x2, y2) {
+	game.beginPath(); // Inicia un nuevo camino
+	game.moveTo(x1, y1); // Mueve el punto de inicio a (x1, y1) sin rayar nada
+	game.lineTo(x2, y2); // Dibuja una línea hasta (x2, y2)
+	game.stroke(); // Dibuja el contorno del camino
 }
