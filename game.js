@@ -17,6 +17,11 @@ const playerPosition = {
 	y: undefined,
 };
 
+const giftPosition = {
+	x: undefined,
+	y: undefined,
+};
+
 // Establece el tamaño del mapa y lo hace responsive
 function setCanvasSize() {
 	if (window.innerHeight > window.innerWidth) {
@@ -48,7 +53,7 @@ function startGame() {
 	// array.split('') // corta el array según el carácter que se le dé, sí no tiene se le corta por cada carácter
 	// array.trim() // elimina los espacios al inicio o final de un array
 
-	const map = maps[0]; // Seleccionamos el mapa o nivel
+	const map = maps[1]; // Seleccionamos el mapa o nivel
 	const mapRows = map.trim().split("\n");
 	const mapRowsLimpios = mapRows.map((row) => row.trim());
 	const mapColums = mapRowsLimpios.map((row) => row.split(""));
@@ -62,17 +67,23 @@ function startGame() {
 			const xx = elementsSize * colI + paddingCanvas / 2;
 			const yy = elementsSize * rowI + paddingCanvas;
 
-			// Buscando al jugador
+			// Buscando la puerta para colocar al jugador
 			if (col == "O" && playerPosition.x == undefined) {
 				playerPosition.x = xx;
 				playerPosition.y = yy;
-				// console.log({ playerPosition });
 			}
-
+			// Buscando el regalo para colocar la posición objetivo
+			if (col == "I" && giftPosition.x == undefined) {
+				giftPosition.x = xx;
+				giftPosition.y = yy;
+			}
+			
 			game.fillText(emoji, xx, yy); // renderiza lo emogis
 			// console.log({ row, col, rowI, colI });
 		});
 	});
+	
+	// console.log({ giftPosition, playerPosition });
 
 	movePlayer();
 
@@ -110,6 +121,16 @@ function startGame() {
 
 // dibuja la nueva posición del jugador
 function movePlayer() {
+	// verificar si colisiona con el objetivo
+	const giftCollisionX = Math.trunc(playerPosition.x) == Math.trunc(giftPosition.x);
+	const giftCollisionY = Math.trunc(playerPosition.y) == Math.trunc(giftPosition.y);
+	// Se eliminan los decimales puesto que para hacer la verificación pueden variar los decimales y lanza que no hemos colisionado
+	const giftCollision = giftCollisionX && giftCollisionY;
+
+	if (giftCollision) {
+		console.log("Subiste de nivel, wiii");
+	}
+
 	game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y);
 }
 
@@ -128,6 +149,7 @@ function moveByKeys(event) {
 }
 function moveUp() {
 	if (playerPosition.y - elementsSize >= 0) {
+		//verificación para que no se salga del mapa
 		playerPosition.y -= elementsSize;
 		startGame();
 	}
@@ -139,13 +161,14 @@ function moveLeft() {
 	}
 }
 function moveRight() {
-	if (playerPosition.x + elementsSize < (canvasSize - elementsSize)) {
+	if (playerPosition.x + elementsSize < canvasSize - elementsSize) {
+		//verificación para que no se salga del mapa
 		playerPosition.x += elementsSize;
 		startGame();
 	}
 }
 function moveDown() {
-	if (playerPosition.y + elementsSize < (canvasSize - elementsSize)) {
+	if (playerPosition.y + elementsSize < canvasSize - elementsSize) {
 		playerPosition.y += elementsSize;
 		startGame();
 	}
