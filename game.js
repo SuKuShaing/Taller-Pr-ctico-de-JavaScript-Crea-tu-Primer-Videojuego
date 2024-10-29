@@ -66,7 +66,7 @@ function startGame() {
 			if (col == "O" && playerPosition.x == undefined) {
 				playerPosition.x = xx;
 				playerPosition.y = yy;
-				console.log({ playerPosition });
+				// console.log({ playerPosition });
 			}
 
 			game.fillText(emoji, xx, yy); // renderiza lo emogis
@@ -108,6 +108,7 @@ function startGame() {
 	// game.fillText("Seba", 50, 50); // El texto a colocar y la posición de inicio
 }
 
+// dibuja la nueva posición del jugador
 function movePlayer() {
 	game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y);
 }
@@ -126,28 +127,20 @@ function moveByKeys(event) {
 	else if (event.key == "ArrowLeft") moveLeft();
 }
 function moveUp() {
-	console.log("Me quiero mover hacia arriba");
 	playerPosition.y -= (elementsSize);
 	startGame();
-	movePlayer();
 }
 function moveLeft() {
-	console.log("Me quiero mover hacia la izquierda");
 	playerPosition.x -= (elementsSize);
 	startGame();
-	movePlayer();
 }
 function moveRight() {
-	console.log("Me quiero mover hacia la derecha");
 	playerPosition.x += (elementsSize);
 	startGame();
-	movePlayer();
 }
 function moveDown() {
-	console.log("Me quiero mover hacia abajo");
 	playerPosition.y += (elementsSize);
 	startGame();
-	movePlayer();
 }
 
 // Para crear una linea
