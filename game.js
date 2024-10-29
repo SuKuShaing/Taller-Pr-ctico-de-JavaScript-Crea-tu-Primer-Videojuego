@@ -36,7 +36,7 @@ function setCanvasSize() {
 // Carga los elementos del mapa
 function startGame() {
 	game.clearRect(0, 0, canvas.width, canvas.height); // limpia el canvas
-	console.log({ canvasSize, elementsSize, paddingCanvas });
+	// console.log({ canvasSize, elementsSize, paddingCanvas });
 
 	game.font = elementsSize + "px Verdana";
 	game.textAlign = "left"; // Alineación horizontal
@@ -127,20 +127,28 @@ function moveByKeys(event) {
 	else if (event.key == "ArrowLeft") moveLeft();
 }
 function moveUp() {
-	playerPosition.y -= (elementsSize);
-	startGame();
+	if (playerPosition.y - elementsSize >= 0) {
+		playerPosition.y -= elementsSize;
+		startGame();
+	}
 }
 function moveLeft() {
-	playerPosition.x -= (elementsSize);
-	startGame();
+	if (playerPosition.x - elementsSize >= 0) {
+		playerPosition.x -= elementsSize;
+		startGame();
+	}
 }
 function moveRight() {
-	playerPosition.x += (elementsSize);
-	startGame();
+	if (playerPosition.x + elementsSize < (canvasSize - elementsSize)) {
+		playerPosition.x += elementsSize;
+		startGame();
+	}
 }
 function moveDown() {
-	playerPosition.y += (elementsSize);
-	startGame();
+	if (playerPosition.y + elementsSize < (canvasSize - elementsSize)) {
+		playerPosition.y += elementsSize;
+		startGame();
+	}
 }
 
 // Para crear una linea
