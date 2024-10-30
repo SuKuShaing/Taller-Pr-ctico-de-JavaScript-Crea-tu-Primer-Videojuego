@@ -54,8 +54,14 @@ function startGame() {
 	// array.split('') // corta el array según el carácter que se le dé, sí no tiene se le corta por cada carácter
 	// array.trim() // elimina los espacios al inicio o final de un array
 
-	console.log({ level });
 	const map = maps[level]; // Seleccionamos el mapa o nivel
+
+	// verifica que ya no quedan más mapas, terminamos el último mapa
+	if (!map) {
+		gameWin();
+		return;
+	}
+
 	const mapRows = map.trim().split("\n");
 	const mapRowsLimpios = mapRows.map((row) => row.trim());
 	const mapColums = mapRowsLimpios.map((row) => row.split(""));
@@ -166,6 +172,10 @@ function levelWin() {
 	giftPosition.y = undefined;
 
 	startGame();
+}
+
+function gameWin() {
+	console.log("Terminaste el juego")
 }
 
 // Escuchar que tecla o botón presionó el jugador
