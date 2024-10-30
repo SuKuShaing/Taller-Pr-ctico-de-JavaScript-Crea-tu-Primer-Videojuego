@@ -16,11 +16,11 @@ const playerPosition = {
 	x: undefined,
 	y: undefined,
 };
-
 const giftPosition = {
 	x: undefined,
 	y: undefined,
 };
+let enemyPositions = [];
 
 // Establece el tamaño del mapa y lo hace responsive
 function setCanvasSize() {
@@ -41,7 +41,7 @@ function setCanvasSize() {
 // Carga los elementos del mapa
 function startGame() {
 	game.clearRect(0, 0, canvas.width, canvas.height); // limpia el canvas
-	// console.log({ canvasSize, elementsSize, paddingCanvas });
+	enemyPositions = []; // vaciamos el array de enemigos o bombas
 
 	game.font = elementsSize + "px Verdana";
 	game.textAlign = "left"; // Alineación horizontal
@@ -53,7 +53,7 @@ function startGame() {
 	// array.split('') // corta el array según el carácter que se le dé, sí no tiene se le corta por cada carácter
 	// array.trim() // elimina los espacios al inicio o final de un array
 
-	const map = maps[1]; // Seleccionamos el mapa o nivel
+	const map = maps[0]; // Seleccionamos el mapa o nivel
 	const mapRows = map.trim().split("\n");
 	const mapRowsLimpios = mapRows.map((row) => row.trim());
 	const mapColums = mapRowsLimpios.map((row) => row.split(""));
@@ -77,13 +77,20 @@ function startGame() {
 				giftPosition.x = xx;
 				giftPosition.y = yy;
 			}
-			
+			// Buscando y guardando la posición de las bombas
+			if (col == "X") {
+				enemyPositions.push({
+					x: xx,
+					y: yy,
+				});
+			}
+
 			game.fillText(emoji, xx, yy); // renderiza lo emogis
 			// console.log({ row, col, rowI, colI });
 		});
 	});
-	
-	// console.log({ giftPosition, playerPosition });
+
+	console.log({ enemyPositions });
 
 	movePlayer();
 
@@ -121,14 +128,28 @@ function startGame() {
 
 // dibuja la nueva posición del jugador
 function movePlayer() {
-	// verificar si colisiona con el objetivo
-	const giftCollisionX = Math.trunc(playerPosition.x) == Math.trunc(giftPosition.x);
-	const giftCollisionY = Math.trunc(playerPosition.y) == Math.trunc(giftPosition.y);
+	// verificar si colisiona con el objetivo regalo
+
+	const giftCollisionX =
+		Math.trunc(playerPosition.x) == Math.trunc(giftPosition.x);
+	const giftCollisionY =
+		Math.trunc(playerPosition.y) == Math.trunc(giftPosition.y);
 	// Se eliminan los decimales puesto que para hacer la verificación pueden variar los decimales y lanza que no hemos colisionado
 	const giftCollision = giftCollisionX && giftCollisionY;
 
 	if (giftCollision) {
 		console.log("Subiste de nivel, wiii");
+	}
+
+	// verificar si colisiona con el objetivo regalo
+	const enemyCollision = enemyPositions.find((enemy) => {
+		const enemyCollisionX = Math.trunc(enemy.x) == Math.trunc(playerPosition.x);
+		const enemyCollisionY = Math.trunc(enemy.y) == Math.trunc(playerPosition.y);
+		return enemyCollisionX && enemyCollisionY
+	});
+
+	if (enemyCollision) {
+		console.log("Chocaste contra un enemigo :(");
 	}
 
 	game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y);
