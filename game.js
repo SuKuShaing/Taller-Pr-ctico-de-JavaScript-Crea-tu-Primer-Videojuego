@@ -12,6 +12,7 @@ let canvasSize;
 let elementsSize;
 let paddingCanvas;
 let level = 0;
+let lives = 3;
 
 const playerPosition = {
 	x: undefined,
@@ -155,15 +156,7 @@ function movePlayer() {
 	});
 
 	if (enemyCollision) {
-		console.log("Chocaste contra un enemigo :(");
-
-		// limpia las posiciones de jugador y el objetivo
-		playerPosition.x = undefined;
-		playerPosition.y = undefined;
-		giftPosition.x = undefined;
-		giftPosition.y = undefined;
-
-		startGame();
+		levelFail();
 	}
 
 	game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y);
@@ -184,6 +177,27 @@ function levelWin() {
 
 function gameWin() {
 	console.log("Terminaste el juego");
+}
+
+function levelFail() {
+	console.log("Chocaste contra un enemigo :(");
+
+	lives--;
+
+	console.log({ lives });
+
+	if (lives <= 0) {
+		level = 0;
+		lives = 3;
+	}
+
+	// limpia las posiciones de jugador y el objetivo
+	playerPosition.x = undefined;
+	playerPosition.y = undefined;
+	giftPosition.x = undefined;
+	giftPosition.y = undefined;
+
+	startGame();
 }
 
 // Escuchar que tecla o botón presionó el jugador
