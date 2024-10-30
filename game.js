@@ -156,6 +156,14 @@ function movePlayer() {
 
 	if (enemyCollision) {
 		console.log("Chocaste contra un enemigo :(");
+
+		// limpia las posiciones de jugador y el objetivo
+		playerPosition.x = undefined;
+		playerPosition.y = undefined;
+		giftPosition.x = undefined;
+		giftPosition.y = undefined;
+
+		startGame();
 	}
 
 	game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y);
@@ -175,7 +183,7 @@ function levelWin() {
 }
 
 function gameWin() {
-	console.log("Terminaste el juego")
+	console.log("Terminaste el juego");
 }
 
 // Escuchar que tecla o botón presionó el jugador
