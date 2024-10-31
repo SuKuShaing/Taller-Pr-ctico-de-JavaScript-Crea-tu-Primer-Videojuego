@@ -4,6 +4,7 @@ const btnUp = document.querySelector("#up");
 const btnLeft = document.querySelector("#left");
 const btnRight = document.querySelector("#right");
 const btnDown = document.querySelector("#down");
+const spanLives = document.querySelector("#lives");
 
 window.addEventListener("load", setCanvasSize);
 window.addEventListener("resize", setCanvasSize);
@@ -66,6 +67,8 @@ function startGame() {
 	const mapRows = map.trim().split("\n");
 	const mapRowsLimpios = mapRows.map((row) => row.trim());
 	const mapColums = mapRowsLimpios.map((row) => row.split(""));
+
+	showLives();
 
 	mapColums.forEach((row, rowI) => {
 		// el segundo elemento rowI es el indice
@@ -198,6 +201,12 @@ function levelFail() {
 	giftPosition.y = undefined;
 
 	startGame();
+}
+
+function showLives() {
+	// Array(lives).fill(emojis['HEART']); //  ['❤️', '❤️', '❤️']
+
+	spanLives.innerHTML = emojis["HEART"].repeat(lives);
 }
 
 // Escuchar que tecla o botón presionó el jugador
