@@ -5,6 +5,7 @@ const btnLeft = document.querySelector("#left");
 const btnRight = document.querySelector("#right");
 const btnDown = document.querySelector("#down");
 const spanLives = document.querySelector("#lives");
+const spanTime = document.querySelector("#time");
 
 window.addEventListener("load", setCanvasSize);
 window.addEventListener("resize", setCanvasSize);
@@ -14,6 +15,9 @@ let elementsSize;
 let paddingCanvas;
 let level = 0;
 let lives = 3;
+let timeStart;
+let timePlayer;
+let timeInterval;
 
 const playerPosition = {
 	x: undefined,
@@ -64,9 +68,10 @@ function startGame() {
 		return;
 	}
 
-	const mapRows = map.trim().split("\n");
-	const mapRowsLimpios = mapRows.map((row) => row.trim());
-	const mapColums = mapRowsLimpios.map((row) => row.split(""));
+	// pasa los mapas de un string a array
+	const mapRows = map.trim().split("\n"); // corta en los enter
+	const mapRowsLimpios = mapRows.map((row) => row.trim()); // a cada fila le quita el inicio y final en blanco
+	const mapColums = mapRowsLimpios.map((row) => row.split("")); // cada fila es cortada por letra y puesta en un array
 
 	showLives();
 
@@ -180,6 +185,7 @@ function levelWin() {
 
 function gameWin() {
 	console.log("Terminaste el juego");
+	clearInterval(timeInterval);
 }
 
 function levelFail() {
@@ -192,6 +198,7 @@ function levelFail() {
 	if (lives <= 0) {
 		level = 0;
 		lives = 3;
+		timeStart = undefined;
 	}
 
 	// limpia las posiciones de jugador y el objetivo
@@ -209,6 +216,10 @@ function showLives() {
 	spanLives.innerHTML = emojis["HEART"].repeat(lives);
 }
 
+function showTime() {
+	spanTime.innerHTML = Date.now() - timeStart;
+}
+
 // Escuchar que tecla o botón presionó el jugador
 window.addEventListener("keydown", moveByKeys);
 btnUp.addEventListener("click", moveUp);
@@ -221,6 +232,12 @@ function moveByKeys(event) {
 	else if (event.key == "ArrowDown") moveDown();
 	else if (event.key == "ArrowRight") moveRight();
 	else if (event.key == "ArrowLeft") moveLeft();
+
+	// Verifica que el tiempos esté vacío, si es así lo inicializa
+	if (!timeStart) {
+		timeStart = Date.now();
+		timeInterval = setInterval(showTime, 100);
+	}
 }
 function moveUp() {
 	if (playerPosition.y - elementsSize >= 0) {
