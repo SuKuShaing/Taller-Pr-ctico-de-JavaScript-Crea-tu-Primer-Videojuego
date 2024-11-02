@@ -6,6 +6,8 @@ const btnRight = document.querySelector("#right");
 const btnDown = document.querySelector("#down");
 const spanLives = document.querySelector("#lives");
 const spanTime = document.querySelector("#time");
+const spanRecord = document.querySelector("#record")
+const pResult = document.querySelector("#result")
 
 window.addEventListener("load", setCanvasSize);
 window.addEventListener("resize", setCanvasSize);
@@ -74,6 +76,14 @@ function startGame() {
 	const mapColums = mapRowsLimpios.map((row) => row.split("")); // cada fila es cortada por letra y puesta en un array
 
 	showLives();
+
+	// Verifica que el tiempos esté vacío, si es así lo inicializa
+	if (!timeStart) {
+		timeStart = Date.now();
+		timeInterval = setInterval(showTime, 100);
+
+		showRecords();
+	}
 
 	mapColums.forEach((row, rowI) => {
 		// el segundo elemento rowI es el indice
@@ -186,6 +196,23 @@ function levelWin() {
 function gameWin() {
 	console.log("Terminaste el juego");
 	clearInterval(timeInterval);
+
+	const recordTime = localStorage.getItem("record_time");
+	const playerTime = Date.now() - timeStart;
+
+	if (recordTime) {
+		if (playerTime < recordTime) {
+			localStorage.setItem("record_time", playerTime);
+			pResult.innerHTML = "SUPERASTE EL RECORD!!!";
+		} else {
+			pResult.innerHTML = "lo siento, no superaste el records :(";
+		}
+	} else {
+		localStorage.setItem("record_time", playerTime);
+		pResult.innerHTML = "Se guardó el siguiente record" + playerTime;
+	}
+
+	console.log({ recordTime, playerTime });
 }
 
 function levelFail() {
@@ -220,6 +247,10 @@ function showTime() {
 	spanTime.innerHTML = Date.now() - timeStart;
 }
 
+function showRecords() {
+	spanRecord.innerHTML = localStorage.getItem('record_time')
+}
+
 // Escuchar que tecla o botón presionó el jugador
 window.addEventListener("keydown", moveByKeys);
 btnUp.addEventListener("click", moveUp);
@@ -232,12 +263,6 @@ function moveByKeys(event) {
 	else if (event.key == "ArrowDown") moveDown();
 	else if (event.key == "ArrowRight") moveRight();
 	else if (event.key == "ArrowLeft") moveLeft();
-
-	// Verifica que el tiempos esté vacío, si es así lo inicializa
-	if (!timeStart) {
-		timeStart = Date.now();
-		timeInterval = setInterval(showTime, 100);
-	}
 }
 function moveUp() {
 	if (playerPosition.y - elementsSize >= 0) {
