@@ -6,8 +6,8 @@ const btnRight = document.querySelector("#right");
 const btnDown = document.querySelector("#down");
 const spanLives = document.querySelector("#lives");
 const spanTime = document.querySelector("#time");
-const spanRecord = document.querySelector("#record")
-const pResult = document.querySelector("#result")
+const spanRecord = document.querySelector("#record");
+const pResult = document.querySelector("#result");
 
 window.addEventListener("load", setCanvasSize);
 window.addEventListener("resize", setCanvasSize);
@@ -44,6 +44,10 @@ function setCanvasSize() {
 
 	elementsSize = parseInt(canvasSize / 10 - 1.5); // para crear la grilla
 	paddingCanvas = (canvasSize - elementsSize * 10) / 2;
+
+	playerPosition.x = undefined;
+	playerPosition.y = undefined;
+
 	startGame();
 }
 
@@ -248,7 +252,7 @@ function showTime() {
 }
 
 function showRecords() {
-	spanRecord.innerHTML = localStorage.getItem('record_time')
+	spanRecord.innerHTML = localStorage.getItem("record_time");
 }
 
 // Escuchar que tecla o botón presionó el jugador
