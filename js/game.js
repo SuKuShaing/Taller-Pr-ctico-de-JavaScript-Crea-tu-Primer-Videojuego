@@ -233,7 +233,7 @@ function rellenarCanvas(posXJugador, posYJugador) {
 	posYInicio = posYJugador + elementsSize / 2;
 
 	for (let i = 0; i < canvasSize + 100; i = i + 1) {
-		const opacidad = 1 - i / (canvasSize + 300); // Calcula la opacidad de 1 a 0
+		const opacidad = 1 - i / (canvasSize + 200); // Calcula la opacidad de 1 a 0
 		const color = `rgba(255, 0, 0, ${opacidad})`;
 
 		setTimeout(() => {
