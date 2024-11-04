@@ -262,9 +262,9 @@ function showRecords() {
 function modalDeLaVictoria(playerTime) {
 	setTimeout(openModal, 400); // Después de ganar le dá un tiempo de espera para que aparezca el modal
 	modalTime.innerHTML = playerTime; // Tiempo del usuario en pantalla final
-	timeStart = Date.now() + 6000;
+	timeStart = Date.now() + 11000;
 	setInterval(conteoRegresivo, 1000); // Se limpia cuando se recarga la página
-	setTimeout(recargarWeb, 5500)
+	setTimeout(recargarWeb, 10500)
 }
 
 function conteoRegresivo() {
