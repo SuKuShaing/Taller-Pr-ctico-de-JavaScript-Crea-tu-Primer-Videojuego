@@ -8,6 +8,8 @@ const spanLives = document.querySelector("#lives");
 const spanTime = document.querySelector("#time");
 const spanRecord = document.querySelector("#record");
 const pResult = document.querySelector("#result");
+const modalTime = document.querySelector("#tiempo-hecho");
+const contadorReinicio = document.querySelector("#contador-reinicio");
 
 window.addEventListener("load", setCanvasSize);
 window.addEventListener("resize", setCanvasSize);
@@ -216,6 +218,8 @@ function gameWin() {
 		pResult.innerHTML = "Se guardó el siguiente record" + playerTime;
 	}
 
+	modalDeLaVictoria(playerTime)
+
 	console.log({ recordTime, playerTime });
 }
 
@@ -253,6 +257,22 @@ function showTime() {
 
 function showRecords() {
 	spanRecord.innerHTML = localStorage.getItem("record_time");
+}
+
+function modalDeLaVictoria(playerTime) {
+	setTimeout(openModal, 400); // Después de ganar le dá un tiempo de espera para que aparezca el modal
+	modalTime.innerHTML = playerTime; // Tiempo del usuario en pantalla final
+	timeStart = Date.now() + 6000;
+	setInterval(conteoRegresivo, 1000); // Se limpia cuando se recarga la página
+	setTimeout(recargarWeb, 5500)
+}
+
+function conteoRegresivo() {
+	contadorReinicio.innerHTML = parseInt((timeStart - Date.now())/1000);
+}
+
+function recargarWeb() {
+	location.reload()
 }
 
 // Escuchar que tecla o botón presionó el jugador

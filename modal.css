@@ -1,0 +1,28 @@
+/*******************************************************************/
+/**************************** Modal ********************************/
+/*******************************************************************/
+
+dialog {
+    border-color: #ff6600;
+    background-color: indigo;
+    color: white;
+    border-radius: 10px;
+    /* display: flex; */
+    /* al colocar un display se anula el display none por defecto que tienen los modales */
+    text-align: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+dialog p {
+    margin: 10px;
+}
+
+dialog button {
+    margin: 20px
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+}

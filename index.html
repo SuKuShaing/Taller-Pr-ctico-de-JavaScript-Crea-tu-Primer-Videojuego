@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platzriv - Juego online de carreras y calaveras</title>
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    <div class="game-container">
-        <canvas id="game"></canvas>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Platzriv - Juego online de carreras y calaveras</title>
+		<link rel="stylesheet" href="./styles.css" />
+		<link rel="stylesheet" href="./modal.css" />
+	</head>
+	<body>
+		<div class="game-container">
+			<canvas id="game"></canvas>
 
-        <div class="btns">
-            <button id="up">Arriba</button>
-            <button id="left">Izquirda</button>
-            <button id="right">Derecha</button>
-            <button id="down">Abajo</button>
-        </div>
+			<div class="btns">
+				<button id="up">Arriba</button>
+				<button id="left">Izquirda</button>
+				<button id="right">Derecha</button>
+				<button id="down">Abajo</button>
+			</div>
 
-        <div class="messages">
-            <p>Vidas: <span id="lives"></span></p>
-            <p>Tiempo: ⌛ <span id="time"></span></p>
-            <p>Records: 🏁 <span id="record"></span></p>
-            <p id="result"></p>
-        </div>
-    </div>
-</body>
-<script src="./maps.js"></script>
-<script src="./game.js"></script>
+			<div class="messages">
+				<p>Vidas: <span id="lives"></span></p>
+				<p>Tiempo: ⌛ <span id="time"></span></p>
+				<p>Records: 🏁 <span id="record"></span></p>
+				<p id="result"></p>
+			</div>
+		</div>
+
+		<dialog id="dialogVictoria">
+			<h2>Felicitaciones!!!, Ganaste</h2>
+			<p>Tu tiempo fue de: <span id="tiempo-hecho"></span></p>
+			<p>Reiniciando el juego en: <span id="contador-reinicio"></span></p>
+			<button onclick="location.reload();">Reiniciar ahora</button>
+		</dialog>
+	</body>
+	<script src="./maps.js"></script>
+	<script src="./game.js"></script>
+	<script src="./modal.js"></script>
 </html>
