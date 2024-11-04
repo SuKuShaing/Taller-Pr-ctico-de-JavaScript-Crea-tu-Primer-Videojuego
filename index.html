@@ -22,18 +22,18 @@
 				<p>Vidas: <span id="lives"></span></p>
 				<p>Tiempo: ⌛ <span id="time"></span></p>
 				<p>Records: 🏁 <span id="record"></span></p>
-				<p id="result"></p>
 			</div>
 		</div>
-
+		
 		<dialog id="dialogVictoria">
 			<h2>Felicitaciones!!!, Ganaste</h2>
 			<p>Tu tiempo fue de: <span id="tiempo-hecho"></span></p>
+			<p style="font-weight: bold;" id="result"></p>
 			<p>Reiniciando el juego en: <span id="contador-reinicio"></span></p>
-			<button onclick="location.reload();">Reiniciar ahora</button>
+			<button onclick="recargarWeb()">Reiniciar ahora</button>
 		</dialog>
 	</body>
-	<script src="./scripts/maps.js"></script>
-	<script src="./scripts/game.js"></script>
-	<script src="./scripts/modal.js"></script>
+	<script src="./js/maps.js"></script>
+	<script src="./js/game.js"></script>
+	<script src="./js/modal.js"></script>
 </html>

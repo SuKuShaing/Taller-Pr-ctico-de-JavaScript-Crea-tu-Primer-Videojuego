@@ -119,7 +119,6 @@ function startGame() {
 			}
 
 			game.fillText(emoji, xx, yy); // renderiza lo emogis
-			// console.log({ row, col, rowI, colI });
 		});
 	});
 
@@ -159,8 +158,7 @@ function startGame() {
 
 // dibuja la nueva posición del jugador
 function movePlayer() {
-	// verificar si colisiona con el objetivo regalo
-
+	// verificar si colisiona con el objetivo regalo mediante ver si tienen la misma posición
 	const giftCollisionX =
 		Math.trunc(playerPosition.x) == Math.trunc(giftPosition.x);
 	const giftCollisionY =
@@ -180,7 +178,7 @@ function movePlayer() {
 	});
 
 	if (enemyCollision) {
-		levelFail();
+		animacionDeColision(playerPosition.x, playerPosition.y);
 	}
 
 	game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y);
@@ -211,24 +209,43 @@ function gameWin() {
 			localStorage.setItem("record_time", playerTime);
 			pResult.innerHTML = "SUPERASTE EL RECORD!!!";
 		} else {
-			pResult.innerHTML = "lo siento, no superaste el records :(";
+			pResult.innerHTML = "Aunque no superaste el record :(";
 		}
 	} else {
 		localStorage.setItem("record_time", playerTime);
 		pResult.innerHTML = "Se guardó el siguiente record" + playerTime;
 	}
 
-	modalDeLaVictoria(playerTime)
+	modalDeLaVictoria(playerTime);
 
 	console.log({ recordTime, playerTime });
+}
+
+function animacionDeColision(posXJugador, posYJugador) {
+	rellenarCanvas(posXJugador, posYJugador);
+
+	// espera un segundo antes de avanzar
+	setTimeout(levelFail, 1000);
+}
+
+function rellenarCanvas(posXJugador, posYJugador) {
+	posXInicio = posXJugador + elementsSize / 2 + paddingCanvas;
+	posYInicio = posYJugador + elementsSize / 2;
+
+	for (let i = 0; i < canvasSize + 100; i = i + 1) {
+		const opacidad = 1 - i / (canvasSize + 300); // Calcula la opacidad de 1 a 0
+		const color = `rgba(255, 0, 0, ${opacidad})`;
+
+		setTimeout(() => {
+			drawCircle(posXInicio, posYInicio, elementsSize + i, color, 2);
+		}, 10);
+	}
 }
 
 function levelFail() {
 	console.log("Chocaste contra un enemigo :(");
 
 	lives--;
-
-	console.log({ lives });
 
 	if (lives <= 0) {
 		level = 0;
@@ -264,15 +281,15 @@ function modalDeLaVictoria(playerTime) {
 	modalTime.innerHTML = playerTime; // Tiempo del usuario en pantalla final
 	timeStart = Date.now() + 11000;
 	setInterval(conteoRegresivo, 1000); // Se limpia cuando se recarga la página
-	setTimeout(recargarWeb, 10500)
+	setTimeout(recargarWeb, 10500);
 }
 
 function conteoRegresivo() {
-	contadorReinicio.innerHTML = parseInt((timeStart - Date.now())/1000);
+	contadorReinicio.innerHTML = parseInt((timeStart - Date.now()) / 1000);
 }
 
 function recargarWeb() {
-	location.reload()
+	location.reload();
 }
 
 // Escuchar que tecla o botón presionó el jugador
@@ -316,9 +333,33 @@ function moveDown() {
 }
 
 // Para crear una linea
-function fillLine(x1, y1, x2, y2) {
+function fillLine(
+	PuntoXInicial,
+	PuntoYInicial,
+	PuntoXFinal,
+	PuntoYFinal,
+	color = "red",
+	lineWidth = 5
+) {
 	game.beginPath(); // Inicia un nuevo camino
-	game.moveTo(x1, y1); // Mueve el punto de inicio a (x1, y1) sin rayar nada
-	game.lineTo(x2, y2); // Dibuja una línea hasta (x2, y2)
+	game.moveTo(PuntoXInicial, PuntoYInicial); // Mueve el punto de inicio a (x1, y1) sin rayar nada
+	game.lineTo(PuntoXFinal, PuntoYFinal); // Dibuja una línea hasta (x2, y2)
+	game.strokeStyle = color; // Establece el color de la línea
+	game.lineWidth = lineWidth; // Establece el grosor de la línea, en pixeles
 	game.stroke(); // Dibuja el contorno del camino
+}
+
+// Función para dibujar un círculo con el centro vacío
+function drawCircle(centerX, centerY, radius, color = "red", lineWidth = 5) {
+	game.beginPath(); // Inicia un nuevo camino
+	game.arc(centerX, centerY, radius, 0, 2 * Math.PI); // Dibuja un arco completo (círculo)
+
+	// Dibuja un círculo con contorno
+	game.strokeStyle = color; // Establece el color del contorno
+	game.lineWidth = lineWidth; // Establece el grosor del contorno
+	game.stroke(); // Dibuja el contorno del círculo
+
+	// Dibuja un círculo relleno
+	// game.fillStyle = color; // Establece el color de relleno
+	// game.fill(); // Rellena el círculo con el color especificado
 }
