@@ -207,12 +207,13 @@ function gameWin() {
 		}
 	} else {
 		localStorage.setItem("record_time", playerTime);
-		pResult.innerHTML = "Se guardó el siguiente record" + playerTime;
+		pResult.innerHTML =
+			"Se guardó el siguiente record " + formatearTiempo(playerTime);
 	}
 
 	modalDeLaVictoria(playerTime);
 
-	console.log({ recordTime, playerTime });
+	// console.log({ recordTime, playerTime });
 }
 
 function animacionDeColision(posXJugador, posYJugador) {
@@ -266,17 +267,21 @@ function showTime() {
 	if (!timeStart) {
 		spanTime.innerHTML = 0;
 	} else {
-		spanTime.innerHTML = Date.now() - timeStart;
+		spanTime.innerHTML = formatearTiempo(Date.now() - timeStart);
 	}
 }
 
 function showRecords() {
-	spanRecord.innerHTML = localStorage.getItem("record_time");
+	if (localStorage.getItem("record_time") == null) {
+		spanRecord.innerHTML = `-`;
+	} else {
+		spanRecord.innerHTML = formatearTiempo(localStorage.getItem("record_time"));
+	}
 }
 
 function modalDeLaVictoria(playerTime) {
 	setTimeout(openModal, 400); // Después de ganar le dá un tiempo de espera para que aparezca el modal
-	modalTime.innerHTML = playerTime; // Tiempo del usuario en pantalla final
+	modalTime.innerHTML = formatearTiempo(playerTime, true); // Tiempo del usuario en pantalla final
 	timeStart = Date.now() + 11000;
 	setInterval(conteoRegresivo, 1000); // Se limpia cuando se recarga la página
 	setTimeout(recargarWeb, 10500);
@@ -288,6 +293,18 @@ function conteoRegresivo() {
 
 function recargarWeb() {
 	location.reload();
+}
+
+function formatearTiempo(tiempoIngresado, textoLargo = false) {
+	let tiempoComoTexto = `${tiempoIngresado}`;
+	let miliSegundos = tiempoComoTexto.slice(-3); // Saca los 3 últimos caracteres
+	let segundos = tiempoComoTexto.slice(0, tiempoComoTexto.length - 3);
+
+	if (textoLargo) {
+		return `${segundos} segundos con ${miliSegundos} miliSegundos`;
+	} else {
+		return `${segundos}:${miliSegundos}`;
+	}
 }
 
 // Escuchar que tecla o botón presionó el jugador
