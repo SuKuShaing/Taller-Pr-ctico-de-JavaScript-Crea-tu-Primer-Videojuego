@@ -237,7 +237,7 @@ function rellenarCanvas(posXJugador, posYJugador) {
 }
 
 function levelFail() {
-	console.log("Chocaste contra un enemigo :(");
+	// console.log("Chocaste contra un enemigo :(");
 
 	lives--;
 
@@ -263,7 +263,11 @@ function showLives() {
 }
 
 function showTime() {
-	spanTime.innerHTML = Date.now() - timeStart;
+	if (!timeStart) {
+		spanTime.innerHTML = 0;
+	} else {
+		spanTime.innerHTML = Date.now() - timeStart;
+	}
 }
 
 function showRecords() {
