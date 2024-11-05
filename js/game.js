@@ -83,13 +83,7 @@ function startGame() {
 
 	showLives();
 
-	// Verifica que el tiempos esté vacío, si es así lo inicializa
-	if (!timeStart) {
-		timeStart = Date.now();
-		timeInterval = setInterval(showTime, 100);
-
-		showRecords();
-	}
+	showRecords();
 
 	mapColums.forEach((row, rowI) => {
 		// el segundo elemento rowI es el indice
@@ -311,12 +305,15 @@ function moveUp() {
 		playerPosition.y -= elementsSize;
 		startGame();
 	}
+
+	inicializarTiempo();
 }
 function moveLeft() {
 	if (playerPosition.x - elementsSize >= 0) {
 		playerPosition.x -= elementsSize;
 		startGame();
 	}
+	inicializarTiempo();
 }
 function moveRight() {
 	if (playerPosition.x + elementsSize < canvasSize - elementsSize) {
@@ -324,11 +321,21 @@ function moveRight() {
 		playerPosition.x += elementsSize;
 		startGame();
 	}
+	inicializarTiempo();
 }
 function moveDown() {
 	if (playerPosition.y + elementsSize < canvasSize - elementsSize) {
 		playerPosition.y += elementsSize;
 		startGame();
+	}
+	inicializarTiempo();
+}
+
+function inicializarTiempo() {
+	// Verifica que el tiempos esté vacío, si es así lo inicializa
+	if (!timeStart) {
+		timeStart = Date.now();
+		timeInterval = setInterval(showTime, 100);
 	}
 }
 
