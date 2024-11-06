@@ -195,25 +195,38 @@ function gameWin() {
 	console.log("Terminaste el juego");
 	clearInterval(timeInterval);
 
-	const recordTime = localStorage.getItem("record_time");
+	let records = [];
+
+	const recordTime_1 = localStorage.getItem("record_time_1") ?? 1000000;
+	const recordTime_2 = localStorage.getItem("record_time_2") ?? 1000000;
+	const recordTime_3 = localStorage.getItem("record_time_3") ?? 1000000;
 	const playerTime = Date.now() - timeStart;
 
-	if (recordTime) {
-		if (playerTime < recordTime) {
-			localStorage.setItem("record_time", playerTime);
-			pResult.innerHTML = "SUPERASTE EL RECORD!!!";
-		} else {
-			pResult.innerHTML = "Aunque no superaste el record :(";
-		}
-	} else {
-		localStorage.setItem("record_time", playerTime);
+	records.push(parseInt(recordTime_1, 10));
+	records.push(parseInt(recordTime_2, 10));
+	records.push(parseInt(recordTime_3, 10));
+
+	if (playerTime < records[0]) {
+		localStorage.setItem("record_time_3", recordTime_2);
+		localStorage.setItem("record_time_2", recordTime_1);
+		localStorage.setItem("record_time_1", playerTime);
 		pResult.innerHTML =
-			"Se guardó el siguiente record " + formatearTiempo(playerTime);
+			"Colocaste un nuevo RECORD!!!";
+	} else if (playerTime < records[1]) {
+		localStorage.setItem("record_time_3", recordTime_2);
+		localStorage.setItem("record_time_2", playerTime);
+		pResult.innerHTML =
+			"Quedaste en segundo lugar";
+	} else if (playerTime < records[2]) {
+		localStorage.setItem("record_time_3", playerTime);
+		pResult.innerHTML =
+			"Quedaste en tercer lugar";
+	} else {
+		pResult.innerHTML =
+			"No alcanzaste podio";
 	}
 
 	modalDeLaVictoria(playerTime);
-
-	// console.log({ recordTime, playerTime });
 }
 
 function animacionDeColision(posXJugador, posYJugador) {
@@ -272,10 +285,38 @@ function showTime() {
 }
 
 function showRecords() {
-	if (localStorage.getItem("record_time") == null) {
+	if (
+		localStorage.getItem("record_time_1") == null ||
+		localStorage.getItem("record_time_1") == "null" ||
+		localStorage.getItem("record_time_1") == "1000000"
+	) {
 		spanRecord.innerHTML = `-`;
 	} else {
-		spanRecord.innerHTML = formatearTiempo(localStorage.getItem("record_time"));
+		spanRecord.innerHTML = `🏆 ${formatearTiempo(
+			localStorage.getItem("record_time_1")
+		)}`;
+	}
+	if (
+		localStorage.getItem("record_time_2") == null ||
+		localStorage.getItem("record_time_2") == "null" ||
+		localStorage.getItem("record_time_2") == "1000000"
+	) {
+		spanRecord.innerHTML += ``;
+	} else {
+		spanRecord.innerHTML += ` - 🥈 ${formatearTiempo(
+			localStorage.getItem("record_time_2")
+		)}`;
+	}
+	if (
+		localStorage.getItem("record_time_3") == null ||
+		localStorage.getItem("record_time_3") == "null" ||
+		localStorage.getItem("record_time_3") == "1000000"
+	) {
+		spanRecord.innerHTML += ``;
+	} else {
+		spanRecord.innerHTML += ` - 🥉 ${formatearTiempo(
+			localStorage.getItem("record_time_3")
+		)}`;
 	}
 }
 
