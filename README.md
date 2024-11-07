@@ -14,7 +14,7 @@ https://sukushaing.github.io/Taller-Pr-ctico-de-JavaScript-Crea-tu-Primer-Videoj
 - [x] Colocar un top 3 de los mejores tiempos históricos
 - [x] Colocar un h1
 - [X] Colocar algo que muestre el nivel en el que estás
-- [] Bug: que cuando choque con una bomba no pueda seguir moviéndose
+- [x] Bug: que cuando choque con una bomba no pueda seguir moviéndose
 - [] Qué los botones se vean mejor en mobile
 - [] Añadir más mapas
 

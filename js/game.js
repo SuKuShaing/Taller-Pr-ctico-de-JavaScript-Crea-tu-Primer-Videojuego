@@ -23,6 +23,7 @@ let lives = 3;
 let timeStart;
 let timePlayer;
 let timeInterval;
+let enColision = false; // Evita que se mueva cuando choca con una bomba
 
 const playerPosition = {
 	x: undefined,
@@ -175,6 +176,7 @@ function movePlayer() {
 	});
 
 	if (enemyCollision) {
+		enColision = true;
 		animacionDeColision(playerPosition.x, playerPosition.y);
 	}
 
@@ -267,6 +269,7 @@ function levelFail() {
 	giftPosition.x = undefined;
 	giftPosition.y = undefined;
 
+	enColision = false;
 	startGame();
 }
 
@@ -366,6 +369,7 @@ function moveByKeys(event) {
 	else if (event.key == "ArrowLeft") moveLeft();
 }
 function moveUp() {
+	if (enColision) return; // no permite movimiento si chocó con una bomba
 	if (playerPosition.y - elementsSize >= 0) {
 		//verificación para que no se salga del mapa
 		playerPosition.y -= elementsSize;
@@ -375,6 +379,7 @@ function moveUp() {
 	inicializarTiempo();
 }
 function moveLeft() {
+	if (enColision) return; // no permite movimiento si chocó con una bomba
 	if (playerPosition.x - elementsSize >= 0) {
 		playerPosition.x -= elementsSize;
 		startGame();
@@ -382,6 +387,7 @@ function moveLeft() {
 	inicializarTiempo();
 }
 function moveRight() {
+	if (enColision) return; // no permite movimiento si chocó con una bomba
 	if (playerPosition.x + elementsSize < canvasSize - elementsSize) {
 		//verificación para que no se salga del mapa
 		playerPosition.x += elementsSize;
@@ -390,6 +396,7 @@ function moveRight() {
 	inicializarTiempo();
 }
 function moveDown() {
+	if (enColision) return; // no permite movimiento si chocó con una bomba
 	if (playerPosition.y + elementsSize < canvasSize - elementsSize) {
 		playerPosition.y += elementsSize;
 		startGame();
