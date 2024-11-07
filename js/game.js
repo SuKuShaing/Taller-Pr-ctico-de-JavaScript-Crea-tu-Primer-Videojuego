@@ -206,7 +206,7 @@ function gameWin() {
 	const recordTime_1 = localStorage.getItem("record_time_1") ?? 1000000;
 	const recordTime_2 = localStorage.getItem("record_time_2") ?? 1000000;
 	const recordTime_3 = localStorage.getItem("record_time_3") ?? 1000000;
-	const playerTime = Date.now() - timeStart;
+	const playerTime = Math.abs(Date.now() - timeStart); // Para que siempre sea positivo, increiblemente a veces daba número negativos
 
 	records.push(parseInt(recordTime_1, 10));
 	records.push(parseInt(recordTime_2, 10));
