@@ -10,6 +10,7 @@ const spanRecord = document.querySelector("#record");
 const pResult = document.querySelector("#result");
 const modalTime = document.querySelector("#tiempo-hecho");
 const contadorReinicio = document.querySelector("#contador-reinicio");
+const spanNivel = document.querySelector("#nivel");
 
 window.addEventListener("load", setCanvasSize);
 window.addEventListener("resize", setCanvasSize);
@@ -84,6 +85,8 @@ function startGame() {
 	showLives();
 
 	showRecords();
+
+	showLevel(level + 1, maps.length);
 
 	mapColums.forEach((row, rowI) => {
 		// el segundo elemento rowI es el indice
@@ -195,6 +198,7 @@ function gameWin() {
 	console.log("Terminaste el juego");
 	clearInterval(timeInterval);
 
+	// Asignación de posición en el podio
 	let records = [];
 
 	const recordTime_1 = localStorage.getItem("record_time_1") ?? 1000000;
@@ -210,20 +214,16 @@ function gameWin() {
 		localStorage.setItem("record_time_3", recordTime_2);
 		localStorage.setItem("record_time_2", recordTime_1);
 		localStorage.setItem("record_time_1", playerTime);
-		pResult.innerHTML =
-			"Colocaste un nuevo RECORD!!!";
+		pResult.innerHTML = "Colocaste un nuevo RECORD!!!";
 	} else if (playerTime < records[1]) {
 		localStorage.setItem("record_time_3", recordTime_2);
 		localStorage.setItem("record_time_2", playerTime);
-		pResult.innerHTML =
-			"Quedaste en segundo lugar";
+		pResult.innerHTML = "Quedaste en segundo lugar";
 	} else if (playerTime < records[2]) {
 		localStorage.setItem("record_time_3", playerTime);
-		pResult.innerHTML =
-			"Quedaste en tercer lugar";
+		pResult.innerHTML = "Quedaste en tercer lugar";
 	} else {
-		pResult.innerHTML =
-			"No alcanzaste podio";
+		pResult.innerHTML = "No alcanzaste podio";
 	}
 
 	modalDeLaVictoria(playerTime);
@@ -346,6 +346,10 @@ function formatearTiempo(tiempoIngresado, textoLargo = false) {
 	} else {
 		return `${segundos}:${miliSegundos}`;
 	}
+}
+
+function showLevel(nivelActual, TotalDeNiveles) {
+	spanNivel.innerHTML = `- ${nivelActual}/${TotalDeNiveles}`;
 }
 
 // Escuchar que tecla o botón presionó el jugador

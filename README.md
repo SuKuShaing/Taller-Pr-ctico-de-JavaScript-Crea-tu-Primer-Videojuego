@@ -12,8 +12,9 @@ https://sukushaing.github.io/Taller-Pr-ctico-de-JavaScript-Crea-tu-Primer-Videoj
 - [X] Bug: cuando el juego se reinicia el tiempo pasa a NaN
 - [x] Falta colocar bien la visualización del tiempo, se ve fea como está
 - [x] Colocar un top 3 de los mejores tiempos históricos
-- [] Colocar un h1
-- [] Colocar algo que muestre el nivel en el que estás
+- [x] Colocar un h1
+- [X] Colocar algo que muestre el nivel en el que estás
+- [] Bug: que cuando choque con una bomba no pueda seguir moviéndose
 - [] Qué los botones se vean mejor en mobile
 - [] Añadir más mapas
 
