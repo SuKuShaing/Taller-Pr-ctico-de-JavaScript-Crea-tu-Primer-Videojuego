@@ -20,4 +20,4 @@ https://sukushaing.github.io/Taller-Pr-ctico-de-JavaScript-Crea-tu-Primer-Videoj
 
 
 Ideas locas
-- [ ] colocar una niebla de guerra, que solo vea lo que está cerca de él, que no se vea todo el mapa
+- [x] colocar una niebla de guerra, que solo vea lo que está cerca de él, que no se vea todo el mapa

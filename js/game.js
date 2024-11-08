@@ -165,7 +165,7 @@ function movePlayer() {
 	const giftCollision = giftCollisionX && giftCollisionY;
 
 	if (giftCollision) {
-		levelWin();
+		animacionDeColisionGift(playerPosition.x, playerPosition.y);
 	}
 
 	// verificar si colisiona con alguna bomba
@@ -177,10 +177,13 @@ function movePlayer() {
 
 	if (enemyCollision) {
 		enColision = true;
-		animacionDeColision(playerPosition.x, playerPosition.y);
+		animacionDeColisionBomba(playerPosition.x, playerPosition.y);
 	}
 
 	game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y);
+
+	// Coloca la niebla en el mapa
+	NieblaDeGuerra(playerPosition.x, playerPosition.y);
 }
 
 function levelWin() {
@@ -231,27 +234,6 @@ function gameWin() {
 	modalDeLaVictoria(playerTime);
 }
 
-function animacionDeColision(posXJugador, posYJugador) {
-	rellenarCanvas(posXJugador, posYJugador);
-
-	// espera un segundo antes de avanzar
-	setTimeout(levelFail, 1000);
-}
-
-function rellenarCanvas(posXJugador, posYJugador) {
-	posXInicio = posXJugador + elementsSize / 2 + paddingCanvas;
-	posYInicio = posYJugador + elementsSize / 2;
-
-	for (let i = 0; i < canvasSize + 100; i = i + 1) {
-		const opacidad = 1 - i / (canvasSize + 200); // Calcula la opacidad de 1 a 0
-		const color = `rgba(255, 0, 0, ${opacidad})`;
-
-		setTimeout(() => {
-			drawCircle(posXInicio, posYInicio, elementsSize + i, color, 2);
-		}, 10);
-	}
-}
-
 function levelFail() {
 	// console.log("Chocaste contra un enemigo :(");
 
@@ -271,6 +253,52 @@ function levelFail() {
 
 	enColision = false;
 	startGame();
+}
+
+function animacionDeColisionGift(posXJugador, posYJugador) {
+	rellenarCanvas(posXJugador, posYJugador, "verde");
+
+	// espera un segundo antes de avanzar
+	setTimeout(levelWin, 1000);
+}
+
+function animacionDeColisionBomba(posXJugador, posYJugador) {
+	rellenarCanvas(posXJugador, posYJugador, "rojo");
+
+	// espera un segundo antes de avanzar
+	setTimeout(levelFail, 1000);
+}
+
+function rellenarCanvas(posXJugador, posYJugador, color) {
+	posXInicio = posXJugador + elementsSize / 2 + paddingCanvas;
+	posYInicio = posYJugador + elementsSize / 2;
+	
+	for (let i = 0; i < canvasSize + 200; i = i + 1) {
+		const opacidad = i / (canvasSize/1.8);
+		let colorObjetivo;
+
+		if (color === "rojo") {
+            colorObjetivo = `rgba(255, 0, 0, ${opacidad})`;
+        } else if (color === "verde") {
+            colorObjetivo = `rgba(0, 255, 0, ${opacidad})`;
+        }
+
+		setTimeout(() => {
+			drawCircle(posXInicio, posYInicio, elementsSize + i, colorObjetivo, 2);
+		}, 10);
+	}
+}
+
+function NieblaDeGuerra(posXJugador, posYJugador) {
+	posXInicio = posXJugador + elementsSize / 2 + paddingCanvas;
+	posYInicio = posYJugador + elementsSize / 2;
+	
+	for (let i = 0; i < canvasSize + 200; i = i + 1) {
+		const opacidad = i / (canvasSize/2);
+		const colorObjetivo = `rgba(0, 0, 0, ${opacidad})`;
+
+		drawCircle(posXInicio, posYInicio, elementsSize + i, colorObjetivo, 2);
+	}
 }
 
 function showLives() {
