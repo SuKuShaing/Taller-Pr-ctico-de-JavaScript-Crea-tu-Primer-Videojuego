@@ -293,11 +293,11 @@ function NieblaDeGuerra(posXJugador, posYJugador) {
 	posXInicio = posXJugador + elementsSize / 2 + paddingCanvas;
 	posYInicio = posYJugador + elementsSize / 2;
 	
-	for (let i = 0; i < canvasSize + 200; i = i + 1) {
-		const opacidad = i / (canvasSize/2);
-		const colorObjetivo = `rgba(0, 0, 0, ${opacidad})`;
+	for (let i = 0; i < canvasSize + 200; i = i + 2) {
+		const opacidad = i / (canvasSize/2.5);
+		const colorObjetivo = `rgba(56, 56, 56, ${opacidad})`;
 
-		drawCircle(posXInicio, posYInicio, elementsSize + i, colorObjetivo, 2);
+		drawCircle(posXInicio, posYInicio, elementsSize + i, colorObjetivo, 3);
 	}
 }
 

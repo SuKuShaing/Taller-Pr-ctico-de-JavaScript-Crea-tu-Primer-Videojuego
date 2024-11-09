@@ -16,7 +16,7 @@ https://sukushaing.github.io/Taller-Pr-ctico-de-JavaScript-Crea-tu-Primer-Videoj
 - [x] Colocar algo que muestre el nivel en el que estás
 - [x] Bug: que cuando choque con una bomba no pueda seguir moviéndose
 - [x] Qué los botones se vean mejor en mobile
-- [ ] Añadir más mapas
+- [x] Añadir más mapas
 
 
 Ideas locas
