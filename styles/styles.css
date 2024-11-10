@@ -72,6 +72,17 @@ p {
 	width: 100%;
 }
 
+/* Deshabilitar el zoom en gestos de pellizcar */
+html {
+    touch-action: manipulation;
+}
+body {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+}
+
+
 @media (max-width: 700px) {
 	.btns {
 		flex-direction: column;

@@ -471,3 +471,9 @@ function drawCircle(centerX, centerY, radius, color = "red", lineWidth = 5) {
 	// game.fillStyle = color; // Establece el color de relleno
 	// game.fill(); // Rellena el círculo con el color especificado
 }
+
+
+// Evita el comportamiento por defecto del doble click
+document.addEventListener('dblclick', function(event) {
+    event.preventDefault();
+});
